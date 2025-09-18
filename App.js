@@ -1,16 +1,24 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-//const cors = require('cors'); 
+const cors = require('cors'); 
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 const connectDB = require('./config/dbConnect');
-const bookingRoutes = require('./routes/bookingRoutes');
+const bookingRoutes = require('./routes/bookingRoute');
 
 connectDB();
+
+// ✅ Fix CORS
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+};
+app.use(cors(corsOptions));
 // Middleware
 app.use(express.json());
-//app.use(cors());
+
 
 // Routes
 app.use("/api/bookings", bookingRoutes);
