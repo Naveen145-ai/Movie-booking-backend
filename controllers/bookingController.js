@@ -4,14 +4,14 @@ const Booking = require("../models/bookingModel");
 // @route   POST /api/bookings
 // @access  Public
 const createBooking = async (req, res) => {
-  const { time, seats, totalPrice } = req.body;
+  const { userEmail, movieTitle, showTime, seats, totalPrice } = req.body;
 
-  if (!time || !seats || seats.length === 0 || !totalPrice) {
+  if (!userEmail || !movieTitle || !showTime || !seats || seats.length === 0 || !totalPrice) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
-    const booking = await Booking.create({ time, seats, totalPrice });
+    const booking = await Booking.create({ userEmail, movieTitle, showTime, seats, totalPrice });
     res.status(201).json(booking);
   } catch (error) {
     console.error(error);

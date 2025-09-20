@@ -6,12 +6,14 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 const connectDB = require('./config/dbConnect');
 const bookingRoutes = require('./routes/bookingRoute');
+const showRoutes = require('./routes/showRoute');
+const authRoutes = require('./routes/authRoute');
 
 connectDB();
 
 // ✅ Fix CORS
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 };
@@ -22,6 +24,8 @@ app.use(express.json());
 
 // Routes
 app.use("/api/bookings", bookingRoutes);
+app.use("/api", showRoutes);
+app.use("/api/auth", authRoutes);
 
 
 app.listen(process.env.PORT, () => {
